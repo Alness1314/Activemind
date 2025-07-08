@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         }
 
         nfcCardAdapter = NfcCardAdapter(getCards(), this)
-        gridLayoutManager = GridLayoutManager(this, 3) // ← Grid de 3 columnas
+        gridLayoutManager = GridLayoutManager(this, 2) // ← Grid de 3 columnas
 
         binding.recyclerView.apply {
             layoutManager = gridLayoutManager
@@ -41,12 +41,92 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         }
 
         binding.recyclerView.addItemDecoration(
-            SpacesItemDecoration(16) // 16px o usa `resources.getDimensionPixelSize(R.dimen.spacing)`
+            SpacesItemDecoration(8) // 16px o usa `resources.getDimensionPixelSize(R.dimen.spacing)`
         )
     }
 
-    fun getCards(): MutableList<NfcCard>{
-        return mutableListOf();
+    private fun getCards(): MutableList<NfcCard> {
+        val nfcCards = mutableListOf<NfcCard>()
+
+        for (i in 1..10) {
+            val nfcCard = when (i) {
+                1 -> NfcCard(
+                    "1",
+                    "Circle",
+                    "ic_circle",
+                    "Red"
+                )
+
+                2 -> NfcCard(
+                    "2",
+                    "Square",
+                    "ic_square",
+                    "Blue"
+                )
+
+                3 -> NfcCard(
+                    "3",
+                    "Triangle",
+                    "ic_triangle",
+                    "Yellow"
+                )
+
+                4 -> NfcCard(
+                    "4",
+                    "Pentagon",
+                    "ic_pentagon",
+                    "Green"
+                )
+
+                5 -> NfcCard(
+                    "5",
+                    "Hexagon",
+                    "ic_hexagon",
+                    "Purple"
+                )
+
+                6 -> NfcCard(
+                    "6",
+                    "Rectangle",
+                    "ic_rectangle",
+                    "Orange"
+                )
+
+                7 -> NfcCard(
+                    "7",
+                    "Star",
+                    "ic_star",
+                    "Gold"
+                )
+
+                8 -> NfcCard(
+                    "8",
+                    "Moon",
+                    "ic_moon",
+                    "Sky blue"
+                )
+
+                9 -> NfcCard(
+                    "9",
+                    "Sunny",
+                    "ic_sunny",
+                    "Grey"
+                )
+
+                10 -> NfcCard(
+                    "10",
+                    "Heart",
+                    "ic_heart",
+                    "Pink"
+                )
+
+                else -> null
+            }
+
+            nfcCard?.let { nfcCards.add(it) }
+        }
+
+        return nfcCards
     }
 
     override fun onClick(nfcCard: NfcCard, position: Int) {
@@ -54,7 +134,12 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     }
 
     class SpacesItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {
-        override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+        override fun getItemOffsets(
+            outRect: Rect,
+            view: View,
+            parent: RecyclerView,
+            state: RecyclerView.State
+        ) {
             outRect.left = space
             outRect.right = space
             outRect.bottom = space

@@ -12,7 +12,7 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="My Dashboard"
+        android:text="@string/title_app_main"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@color/black"
@@ -29,6 +29,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:padding="16dp" />
+        android:padding="8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
