@@ -26,7 +26,7 @@ class NfcCardAdapter(private val nfcCards: List<NfcCard>, private val listener: 
 
         with(holder){
             setListener(nfcCard, position)
-            binding.tvTitle.text = nfcCard.name
+            binding.tvTitle.text = nfcCard.figure
 
             val resId = context.resources.getIdentifier(nfcCard.icon, "drawable", context.packageName)
 

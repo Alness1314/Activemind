@@ -9,7 +9,7 @@
     android:gravity="center">
 
     <ImageView
-        android:id="@+id/ivIcon"
+        android:id="@+id/ivIconFragment"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/ic_circle"/>
@@ -19,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
+        android:textColor="@color/card_text_color"
         tools:text="@string/circle"
         android:layout_marginTop="16dp" />
 
@@ -26,6 +27,7 @@
         android:id="@+id/tvTimerFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/card_text_color"
         tools:text="Tiempo restante: 60 s"
         android:layout_marginTop="16dp" />
 

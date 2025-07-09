@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="purple">#5233DC</color>
+    <color name="sky_blue_1">#29434E</color>
+    <color name="text_color">#E6E6E6</color>
+
+    <color name="card_background_color">#263238</color> <!-- Gris-azul oscuro (Material Dark Theme) -->
+    <color name="card_border_color">#37474F</color>    <!-- Gris más claro para bordes sutiles -->
+    <color name="card_text_color">#FFFFFF</color>      <!-- Blanco para texto -->
+</resources>
