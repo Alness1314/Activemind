@@ -130,7 +130,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     }
 
     override fun onClick(nfcCard: NfcCard, position: Int) {
-        Toast.makeText(this, "Clicked: " + nfcCard.name, Toast.LENGTH_SHORT).show();
+        val dialog = NfcCardDialogFragment.newInstance(nfcCard.name, nfcCard.icon, nfcCard.data)
+        dialog.show(supportFragmentManager, "NfcCardDialog")
     }
 
     class SpacesItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {
