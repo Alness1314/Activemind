@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             val nfcCard = when (i) {
                 1 -> NfcCard("1", "Circle", "ic_circle", "Red")
                 2 -> NfcCard("2", "Square", "ic_square", "Blue")
-                3 -> NfcCard("3", "Triangle", "ic_triangle", "Yellow")
+                3 -> NfcCard("3", "Triangle", "triangulo_ic", "Yellow")
                 4 -> NfcCard("4", "Pentagon", "ic_pentagon", "Green")
                 5 -> NfcCard("5", "Hexagon", "ic_hexagon", "Purple")
                 6 -> NfcCard("6", "Rectangle", "ic_rectangle", "Orange")
