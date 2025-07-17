@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.RawRes
 import androidx.core.content.ContextCompat
@@ -86,7 +87,7 @@ class NfcCardDialogFragment : DialogFragment() {
         if (nfcFigure == figure && nfcColor == color) {
             countDownTimer.cancel()
 
-            binding.tvTimerFragment.text = "¡Tarjeta Correcta!"
+            binding.tvTimerFragment.text = "¡Figura Correcta!"
             binding.tvTimerFragment.setTextColor(ContextCompat.getColor(requireContext(), R.color.card_text_color))
             binding.ivIconFragment.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_check_64))
 
@@ -100,7 +101,7 @@ class NfcCardDialogFragment : DialogFragment() {
             }, 1000) // Cierra el dialog tras 1 segundo
         } else {
 
-            binding.tvTimerFragment.text = "¡Tarjeta Incorrecta!"
+            binding.tvTimerFragment.text = "¡Figura Incorrecta!"
             binding.ivIconFragment.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_close_64))
             playSound(R.raw.sound_wrong)
 

@@ -10,6 +10,7 @@ import android.nfc.NfcAdapter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -28,6 +29,9 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     private lateinit var nfcCardAdapter: NfcCardAdapter
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var binding: ActivityMainBinding
+
+    private var success: Int = 10
+    private var errors: Int = 2
 
     //NFC
     private var nfcAdapter: NfcAdapter? = null
@@ -61,7 +65,19 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             Intent(this, javaClass).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
             PendingIntent.FLAG_MUTABLE)
 
+        binding.btnReset.setOnClickListener {
+            errors = 0
+            success = 0
+            setValuesScore(success, errors)
+        }
 
+        setValuesScore(success, errors)
+
+    }
+
+    private fun setValuesScore(success: Int, errors: Int){
+        binding.tvSuccess.text = success.toString()
+        binding.tvError.text = errors.toString()
     }
 
     private fun getCards(): MutableList<NfcCard> {

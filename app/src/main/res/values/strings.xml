@@ -5,4 +5,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="circle">Circulo</string>
+    <string name="score_good">Aciertos:</string>
+    <string name="score_bad">Errores:</string>
 </resources>
