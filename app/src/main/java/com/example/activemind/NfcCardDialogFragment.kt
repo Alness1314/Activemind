@@ -2,13 +2,16 @@ package com.example.activemind
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.annotation.RawRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.example.activemind.databinding.FragmentNfcCardDialogBinding
@@ -82,18 +85,27 @@ class NfcCardDialogFragment : DialogFragment() {
 
         if (nfcFigure == figure && nfcColor == color) {
             countDownTimer.cancel()
+
             binding.tvTimerFragment.text = "¡Tarjeta Correcta!"
             binding.tvTimerFragment.setTextColor(ContextCompat.getColor(requireContext(), R.color.card_text_color))
-
             binding.ivIconFragment.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_check_64))
+
+            val scale = AnimationUtils.loadAnimation(requireContext(), R.anim.scale)
+            binding.ivIconFragment.startAnimation(scale)
+
+            playSound(R.raw.sound_correct)
 
             binding.root.postDelayed({
                 dismiss()
             }, 1000) // Cierra el dialog tras 1 segundo
         } else {
-            binding.ivIconFragment.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_close_64))
+
             binding.tvTimerFragment.text = "¡Tarjeta Incorrecta!"
-            //Snackbar.make(binding.root, "Tarjeta NFC no válida", Snackbar.LENGTH_SHORT).show()
+            binding.ivIconFragment.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_close_64))
+            playSound(R.raw.sound_wrong)
+
+            val shake = AnimationUtils.loadAnimation(requireContext(), R.anim.shake)
+            binding.ivIconFragment.startAnimation(shake)
 
             binding.root.postDelayed({
                 // Restaurar icono original
@@ -108,5 +120,11 @@ class NfcCardDialogFragment : DialogFragment() {
             }, 1000) // Tras 1 segundo, restaurar
         }
 
+    }
+
+    private fun playSound(@RawRes soundResId: Int) {
+        val mediaPlayer = MediaPlayer.create(requireContext(), soundResId)
+        mediaPlayer.setOnCompletionListener { it.release() }
+        mediaPlayer.start()
     }
 }

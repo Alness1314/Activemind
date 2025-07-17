@@ -10,7 +10,6 @@ import android.nfc.NfcAdapter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -70,16 +69,16 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
         for (i in 1..10) {
             val nfcCard = when (i) {
-                1 -> NfcCard("1", "Circle", "ic_circle", "Red")
-                2 -> NfcCard("2", "Square", "ic_square", "Blue")
-                3 -> NfcCard("3", "Triangle", "triangulo_ic", "Yellow")
-                4 -> NfcCard("4", "Pentagon", "ic_pentagon", "Green")
-                5 -> NfcCard("5", "Hexagon", "ic_hexagon", "Purple")
-                6 -> NfcCard("6", "Rectangle", "ic_rectangle", "Orange")
-                7 -> NfcCard("7", "Star", "ic_star", "Gold")
-                8 -> NfcCard("8", "Moon", "ic_moon", "Sky blue")
-                9 -> NfcCard("9", "Sunny", "ic_sunny", "Grey")
-                10 -> NfcCard("10", "Heart", "ic_heart", "Pink")
+                1 -> NfcCard("1", "Círculo", "ic_circle", "Melón")
+                2 -> NfcCard("2", "Cuadrado", "ic_square", "Turquesa")
+                3 -> NfcCard("3", "Triangulo", "triangulo_ic", "Rosa")
+                4 -> NfcCard("4", "Rombo", "ic_diamond", "Gris ")
+                5 -> NfcCard("5", "Rectángulo", "ic_rectangle", "Verde")
+                6 -> NfcCard("6", "Trapecio", "ic_parallel", "Purpura")
+                7 -> NfcCard("7", "Pentágono", "ic_pentagon", "Naranja")
+                8 -> NfcCard("8", "Hexágono", "ic_hexagon", "Café")
+                9 -> NfcCard("9", "Estrella", "ic_star", "Amarillo")
+                10 -> NfcCard("10", "Corazón", "ic_heart", "Rojo")
                 else -> null
             }
 
