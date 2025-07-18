@@ -5,18 +5,14 @@ import android.app.Dialog
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.Toast
 import androidx.annotation.RawRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import com.example.activemind.MainActivity
+import com.example.activemind.R
 import com.example.activemind.databinding.FragmentNfcCardDialogBinding
-import com.google.android.material.snackbar.Snackbar
+import org.json.JSONObject
 
 
 class NfcCardDialogFragment : DialogFragment() {
@@ -30,7 +26,6 @@ class NfcCardDialogFragment : DialogFragment() {
 
         val name = arguments?.getString("figure") ?: ""
         val imageRes = arguments?.getString("image") ?: ""
-        //val data = arguments?.getString("data") ?: ""
 
         // Mostrar nombre e imagen
         binding.tvNameFragment.text = name
@@ -84,7 +79,9 @@ class NfcCardDialogFragment : DialogFragment() {
         val color = arguments?.getString("color") ?: ""
         val imageRes = arguments?.getString("image") ?: ""
 
-        if (nfcFigure == figure && nfcColor == color) {
+        val result = nfcFigure == figure && nfcColor == color
+
+        if (result) {
             countDownTimer.cancel()
 
             binding.tvTimerFragment.text = "¡Figura Correcta!"
@@ -96,9 +93,9 @@ class NfcCardDialogFragment : DialogFragment() {
 
             playSound(R.raw.sound_correct)
 
-            binding.root.postDelayed({
+            /*binding.root.postDelayed({
                 dismiss()
-            }, 1000) // Cierra el dialog tras 1 segundo
+            }, 1000)*/
         } else {
 
             binding.tvTimerFragment.text = "¡Figura Incorrecta!"
@@ -119,6 +116,15 @@ class NfcCardDialogFragment : DialogFragment() {
                 binding.tvTimerFragment.text = "Tiempo restante: $secondsLeft s"
 
             }, 1000) // Tras 1 segundo, restaurar
+        }
+
+        // Comunicar resultado al activity
+        (activity as? MainActivity)?.onNfcResult(result, figure)
+
+        if (result) {
+            binding.root.postDelayed({
+                dismiss()
+            }, 1000)
         }
 
     }

@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.activemind"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.activemind"
-        minSdk = 24
-        targetSdk = 35
+        minSdk = 31
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.glide)
+    implementation(libs.androidx.core.splashscreen)
     kapt(libs.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

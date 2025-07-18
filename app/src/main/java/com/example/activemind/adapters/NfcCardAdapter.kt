@@ -14,6 +14,7 @@ import com.example.activemind.interfaces.OnClickListener
 
 class NfcCardAdapter(private val nfcCards: List<NfcCard>, private val listener: OnClickListener): RecyclerView.Adapter<NfcCardAdapter.ViewHolder>() {
     private lateinit var context: Context
+    private val disabledFigures = mutableSetOf<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
@@ -25,7 +26,6 @@ class NfcCardAdapter(private val nfcCards: List<NfcCard>, private val listener: 
         val nfcCard = nfcCards[position]
 
         with(holder){
-            setListener(nfcCard, position)
             binding.tvTitle.text = nfcCard.figure
 
             val resId = context.resources.getIdentifier(nfcCard.icon, "drawable", context.packageName)
@@ -36,10 +36,29 @@ class NfcCardAdapter(private val nfcCards: List<NfcCard>, private val listener: 
                 .centerCrop()
                 .circleCrop()
                 .into(binding.ivIcon);
+
+            if(disabledFigures.contains(nfcCard.figure)){
+                binding.root.alpha = 0.5f
+                binding.root.isClickable = false
+            }else{
+                binding.root.alpha = 1f
+                binding.root.isClickable = true
+                setListener(nfcCard, position)
+            }
         }
     }
 
     override fun getItemCount(): Int = nfcCards.size
+
+    fun disableCardByFigure(figure: String) {
+        disabledFigures.add(figure)
+        notifyDataSetChanged()
+    }
+
+    fun resetAllCards() {
+        disabledFigures.clear()
+        notifyDataSetChanged()
+    }
 
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {

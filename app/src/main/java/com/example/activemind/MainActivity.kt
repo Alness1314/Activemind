@@ -8,6 +8,8 @@ import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -23,6 +25,7 @@ import com.example.activemind.dto.NfcCard
 import com.example.activemind.interfaces.OnClickListener
 import com.google.android.material.snackbar.Snackbar
 import org.json.JSONObject
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 class MainActivity : AppCompatActivity(), OnClickListener {
 
@@ -30,16 +33,24 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var binding: ActivityMainBinding
 
-    private var success: Int = 10
-    private var errors: Int = 2
+    private var success: Int = 0
+    private var errors: Int = 0
 
     //NFC
     private var nfcAdapter: NfcAdapter? = null
     private lateinit var pendingIntent: PendingIntent
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // Opcional: Muestra el splash por un segundo extra
+        splashScreen.setKeepOnScreenCondition { true }
+        Handler(Looper.getMainLooper()).postDelayed({
+            splashScreen.setKeepOnScreenCondition { false }
+        }, 1000)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -69,6 +80,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             errors = 0
             success = 0
             setValuesScore(success, errors)
+            nfcCardAdapter.resetAllCards()
         }
 
         setValuesScore(success, errors)
@@ -107,6 +119,16 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     override fun onClick(nfcCard: NfcCard, position: Int) {
         val dialog = NfcCardDialogFragment.newInstance(nfcCard.figure, nfcCard.icon, nfcCard.color)
         dialog.show(supportFragmentManager, "NfcCardDialog")
+    }
+
+    fun onNfcResult(result: Boolean, figure: String) {
+        if (result) {
+            success++
+            nfcCardAdapter.disableCardByFigure(figure)
+        } else {
+            errors++
+        }
+        setValuesScore(success, errors)
     }
 
     class SpacesItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {
