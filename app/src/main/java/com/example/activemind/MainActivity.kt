@@ -46,10 +46,18 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         enableEdgeToEdge()
 
         // Opcional: Muestra el splash por un segundo extra
-        splashScreen.setKeepOnScreenCondition { true }
-        Handler(Looper.getMainLooper()).postDelayed({
-            splashScreen.setKeepOnScreenCondition { false }
-        }, 1000)
+        splashScreen.setOnExitAnimationListener { splashViewProvider ->
+            val splashView = splashViewProvider.view
+            splashView.animate()
+                .scaleX(2f)
+                .scaleY(2f)
+                .alpha(0f)
+                .setDuration(500L)
+                .withEndAction {
+                    splashViewProvider.remove()
+                }
+                .start()
+        }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

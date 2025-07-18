@@ -10,4 +10,7 @@
     <color name="card_background_color">#FFFFFF</color> <!-- Blanco puro -->
     <color name="card_border_color">#E0E0E0</color>    <!-- Gris claro suave -->
     <color name="card_text_color">#212121</color>      <!-- Gris oscuro casi negro -->
+
+
+    <color name="purple_2">#695de5</color>
 </resources>
