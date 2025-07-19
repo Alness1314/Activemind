@@ -32,7 +32,7 @@ git clone https://github.com/Alness1314/Activemind.git
 
 ## 🧩 Requisitos
 
-- Android 8.0 (API 26) o superior
+- Android 12 (API 31) o superior
 - Soporte NFC (NXP NTAG213/215/216)
 - Kotlin + Material 3
 - Glide, MediaPlayer, RecyclerView
@@ -46,7 +46,7 @@ Cada tarjeta física contiene un payload tipo `NDEF` con un JSON como:
 ```json
 {
   "figure": "Círculo",
-  "color": "Melón"
+  "color": "Rojo"
 }
 ```
 
