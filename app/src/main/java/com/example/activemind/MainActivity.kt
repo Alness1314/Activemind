@@ -1,9 +1,11 @@
 package com.example.activemind
 
+import android.app.AlertDialog
 import android.app.ComponentCaller
 import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Rect
+import android.media.MediaPlayer
 import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
@@ -69,7 +71,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         }
 
         nfcCardAdapter = NfcCardAdapter(getCards(), this)
-        gridLayoutManager = GridLayoutManager(this, 2) // ← Grid de 3 columnas
+        gridLayoutManager = GridLayoutManager(this, 2) // ← Grid de 2 columnas
 
         binding.recyclerView.apply {
             layoutManager = gridLayoutManager
@@ -77,6 +79,14 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         }
 
         binding.recyclerView.addItemDecoration(SpacesItemDecoration(8))
+
+        if (savedInstanceState != null) {
+            success = savedInstanceState.getInt("success", 0)
+            errors = savedInstanceState.getInt("errors", 0)
+
+            val disabledFigures = savedInstanceState.getStringArrayList("disabledFigures") ?: arrayListOf()
+            nfcCardAdapter.restoreDisabledCards(disabledFigures)
+        }
 
         //NFC setup
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
@@ -100,6 +110,27 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         binding.tvError.text = errors.toString()
     }
 
+    private fun showVictoryDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("¡Felicidades!")
+            .setMessage("Ganaste el juego con $success aciertos y $errors errores.")
+            .setIcon(R.drawable.ic_win_64)
+            .setPositiveButton("Aceptar") { dialog, _ ->
+                dialog.dismiss()
+                success = 0
+                errors = 0
+                setValuesScore(success, errors)
+                nfcCardAdapter.resetAllCards()
+            }
+            .setCancelable(false)
+            .create()
+            .show()
+
+        val mediaPlayer = MediaPlayer.create(this, R.raw.sound_win)
+        mediaPlayer.setOnCompletionListener { it.release() }
+        mediaPlayer.start()
+    }
+
     private fun getCards(): MutableList<NfcCard> {
         val nfcCards = mutableListOf<NfcCard>()
 
@@ -108,7 +139,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 1 -> NfcCard("1", "Círculo", "ic_circle", "Melón")
                 2 -> NfcCard("2", "Cuadrado", "ic_square", "Turquesa")
                 3 -> NfcCard("3", "Triangulo", "triangulo_ic", "Rosa")
-                4 -> NfcCard("4", "Rombo", "ic_diamond", "Gris ")
+                4 -> NfcCard("4", "Rombo", "ic_diamond", "Gris")
                 5 -> NfcCard("5", "Rectángulo", "ic_rectangle", "Verde")
                 6 -> NfcCard("6", "Trapecio", "ic_parallel", "Purpura")
                 7 -> NfcCard("7", "Pentágono", "ic_pentagon", "Naranja")
@@ -137,6 +168,12 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             errors++
         }
         setValuesScore(success, errors)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (success == nfcCardAdapter.itemCount) {
+                showVictoryDialog()
+            }
+        }, 1000)
     }
 
     class SpacesItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {
@@ -162,6 +199,13 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     override fun onResume() {
         super.onResume()
         nfcAdapter?.enableForegroundDispatch(this, pendingIntent, null, null)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("success", success)
+        outState.putInt("errors", errors)
+        outState.putStringArrayList("disabledFigures", ArrayList(nfcCardAdapter.getDisabledFigures()))
     }
 
     override fun onNewIntent(intent: Intent, caller: ComponentCaller) {

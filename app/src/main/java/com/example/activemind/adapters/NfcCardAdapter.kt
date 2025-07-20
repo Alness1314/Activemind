@@ -55,6 +55,14 @@ class NfcCardAdapter(private val nfcCards: List<NfcCard>, private val listener: 
         notifyDataSetChanged()
     }
 
+    fun getDisabledFigures(): List<String> = disabledFigures.toList()
+
+    fun restoreDisabledCards(figures: List<String>) {
+        disabledFigures.clear()
+        disabledFigures.addAll(figures)
+        notifyDataSetChanged()
+    }
+
     fun resetAllCards() {
         disabledFigures.clear()
         notifyDataSetChanged()

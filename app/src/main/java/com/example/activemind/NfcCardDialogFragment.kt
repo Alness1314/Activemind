@@ -6,6 +6,7 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.annotation.RawRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
@@ -80,7 +81,6 @@ class NfcCardDialogFragment : DialogFragment() {
         val imageRes = arguments?.getString("image") ?: ""
 
         val result = nfcFigure == figure && nfcColor == color
-
         if (result) {
             countDownTimer.cancel()
 
